@@ -1,10 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
-namespace WebApplication.Controllers
+namespace Bingo.Controllers
 {
     public class HomeController : Controller
     {
@@ -15,8 +11,7 @@ namespace WebApplication.Controllers
 
         public IActionResult About()
         {
-            ViewData["Message"] = "Your application description page.";
-
+            ViewData["Message"] = "Bingo - Putting an O after Bing since 2017";
             return View();
         }
 

@@ -16,20 +16,20 @@
     </div>
 </div>
 
-<hr/>
-
 <div class="row">
     <div class="col-sm-8 main-results">
-         <h3>Found <span class="label label-info">@(Model.TotalResultsCount)</span> results for: 
-            <span class="label label-success">@(Model.SearchTerm)</span>
-        </h3> 
-
+        <div class="page-header">
+            <h1>Search Results: <small class="label label-success">@(Model.SearchTerm)</small></h1>
+            <h3>Found <span class="label label-info">@(Model.TotalResultsCount)</span>
+        </h3>
+        </div>
+        
         @foreach (var result in Model.GetNaturalSearchResults())
         {
             <div class="media"> 
                 <div class="media-left"> 
                     <a href="//giphy.com/gifs/aS3wPSXARSX0Q"> 
-                        <img alt="64x64" class="media-object" src="http://giphy.com/gifs/natalie-portman-sw-edit-padme-amidala-LvVcFbkQajS8M" data-holder-rendered="true" style="width: 64px; height: 64px;">
+                        <img alt="64x64" class="media-object" src="http://megaicons.net/static/img/icons_sizes/17/70/256/3d-tree-icon.png" data-holder-rendered="true" style="width: 64px; height: 64px;">
                     </a> 
                 </div>
                 <div class="media-body"> 
@@ -42,22 +42,19 @@
         }
     </div>
     <div class="col-sm-3 col-sm-offset-1 complamentory">
-        
+        <div class="page-header">
+            <h1><small>Complimentary Info</small></h1>
+        </div>
         @foreach (var result in Model.GetAdSearchResults())
-        {
-            <div class="media"> 
-                <div class="media-left"> 
-                    <a href="//giphy.com/gifs/aS3wPSXARSX0Q"> 
-                        <img alt="64x64" class="media-object" src="http://giphy.com/gifs/natalie-portman-sw-edit-padme-amidala-LvVcFbkQajS8M" data-holder-rendered="true" style="width: 64px; height: 64px;">
-                    </a> 
+        {   
+            <div class="row">
+                <div class="col-xs-6 col-md-3">
+                    <a href="@result.Link" class="thumbnail">
+                        <img src="http://megaicons.net/static/img/icons_sizes/17/70/512/3d-creeper-icon.png" alt="@(result.Summary)">
+                    </a>
                 </div>
-                <div class="media-body"> 
-                    <h4 class="media-heading">@result.Header</h4>
-                    <p>@result.Summary</p>
-                    <p>@result.Link</p>
-                </div> 
+                @result.Summary
             </div>
-
         }
     </div>
 </div>

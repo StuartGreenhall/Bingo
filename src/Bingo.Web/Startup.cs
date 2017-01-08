@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using Bingo.Services;
 using Bingo.Web.Models;
 using Bingo.Web.OutputFormatters;
@@ -45,6 +46,7 @@ namespace WebApplication
 
             // Add application services.
             services.AddTransient<ISearchEngine, BingSearchService>();
+            services.AddTransient<HttpClient, HttpClient>();
         }
 
         private IDictionary<Type, IConvertTypeToCSV> RegisterObjectToCSVConverters()

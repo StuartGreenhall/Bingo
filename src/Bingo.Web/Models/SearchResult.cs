@@ -6,6 +6,7 @@ namespace Bingo.Web.Models
     {
         public String Summary  {get; set;}
         public String Header  {get; set;}
+        public String Link  {get; set;}
         
         //Possibly use enum here or and object if we want to add behaviour to it. 
         public ResultType Type  {get; set;}
@@ -33,7 +34,7 @@ namespace Bingo.Web.Models
         }
 
         public override String ToString() { 
-            return String.Format("{0}\nSummary: {0}\nHeader: {2}", Header, Header); 
+            return String.Format("Summary: {0}\nHeader: {1}", Header, Header); 
         }
 
 

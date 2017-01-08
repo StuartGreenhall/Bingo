@@ -1,0 +1,63 @@
+@model SearchOutcome
+
+@{
+    ViewData["Title"] = "Results";
+}
+<div class="row" style="padding-top: 10px"> 
+    <div class="col-sm-8 main-header">
+        @await Html.PartialAsync("_SearchBox")
+    </div>
+    <div class="col-sm-3 col-sm-offset-1 controller">
+        <div class="btn-group" role="group" aria-label="...">
+            <button type="button" class="btn btn-default">Analyse</button>
+            <button type="button" class="btn btn-default">Download</button>
+            <button type="button" class="btn btn-default">GetLucky</button>
+        </div> 
+    </div>
+</div>
+
+<hr/>
+
+<div class="row">
+    <div class="col-sm-8 main-results">
+         <h3>Found <span class="label label-info">@(Model.TotalResultsCount)</span> results for: 
+            <span class="label label-success">@(Model.SearchTerm)</span>
+        </h3> 
+
+        @foreach (var result in Model.GetNaturalSearchResults())
+        {
+            <div class="media"> 
+                <div class="media-left"> 
+                    <a href="//giphy.com/gifs/aS3wPSXARSX0Q"> 
+                        <img alt="64x64" class="media-object" src="http://giphy.com/gifs/natalie-portman-sw-edit-padme-amidala-LvVcFbkQajS8M" data-holder-rendered="true" style="width: 64px; height: 64px;">
+                    </a> 
+                </div>
+                <div class="media-body"> 
+                    <h4 class="media-heading">@result.Header</h4>
+                    <p>@result.Summary</p>
+                    <p>@result.Link</p>
+                </div> 
+            </div>
+
+        }
+    </div>
+    <div class="col-sm-3 col-sm-offset-1 complamentory">
+        
+        @foreach (var result in Model.GetAdSearchResults())
+        {
+            <div class="media"> 
+                <div class="media-left"> 
+                    <a href="//giphy.com/gifs/aS3wPSXARSX0Q"> 
+                        <img alt="64x64" class="media-object" src="http://giphy.com/gifs/natalie-portman-sw-edit-padme-amidala-LvVcFbkQajS8M" data-holder-rendered="true" style="width: 64px; height: 64px;">
+                    </a> 
+                </div>
+                <div class="media-body"> 
+                    <h4 class="media-heading">@result.Header</h4>
+                    <p>@result.Summary</p>
+                    <p>@result.Link</p>
+                </div> 
+            </div>
+
+        }
+    </div>
+</div>

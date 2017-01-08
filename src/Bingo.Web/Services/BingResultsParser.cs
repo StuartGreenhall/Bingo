@@ -25,14 +25,17 @@ namespace Bingo.Services
 
             var resultText = doc.DocumentNode.SelectSingleNode(totalCountXPath).InnerText;
             return new SearchOutcome(resultText, searchResults);
-            
         }
 
         private bool NoResultsIn(List<SearchResult> searchResults)
         {
             var noResultCount = searchResults.FindAll(SearchResult => { return SearchResult.IsNoResult(); }).Count;
-            if (noResultCount >= 1 && searchResults.Count == noResultCount) return true;
-            else return false;
+            if (noResultCount >= 1 && searchResults.Count == noResultCount) {
+                return true;
+            }
+            else {
+                return false;
+            }
         }
 
         private SearchResult CreateSearchResult(HtmlNode node)
@@ -54,29 +57,32 @@ namespace Bingo.Services
 
         private SearchResult BuildFromNatural(HtmlNode node)
         {
-            var header = node.SelectSingleNode(".//h2").InnerText;
-            var summary = node.SelectSingleNode(".//p").InnerText;
-
-            return new SearchResult()
-            {
-                Type = ResultType.Natural,
-                Header = header,
-                Summary = summary   
-            };
+            SearchResult result = ParseCommonFields(node);
+            result.Type = ResultType.Natural;
+            return result;
         }
 
         private SearchResult BuildFromAd(HtmlNode node)
         {
-            var header = node.SelectSingleNode(".//h2").InnerText;
-            var textRows = node.SelectNodes(".//p").Select(p => { return p.InnerText; });
+            SearchResult result = ParseCommonFields(node);
+            result.Type = ResultType.Ad;
+            return result;
+        }
+
+        private SearchResult ParseCommonFields(HtmlNode node) {
             
+            var h2 = node.SelectSingleNode(".//h2");
+            var header = h2.InnerText;
+            
+            var link = h2.SelectSingleNode(".//a[@href]").GetAttributeValue("href", String.Empty);
+            var textRows = node.SelectSingleNode(".//p").InnerText;
             var summary = string.Join(" ", textRows);
 
             return new SearchResult()
             {
-                Type = ResultType.Ad,
                 Header = header,
-                Summary = summary   
+                Summary = summary,
+                Link = link      
             };
         }
     }

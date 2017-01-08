@@ -1,3 +1,8 @@
+using System;
+using System.Collections.Generic;
+using Bingo.Services;
+using Bingo.Web.Models;
+using Bingo.Web.OutputFormatters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -30,11 +35,23 @@ namespace WebApplication
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+
+            var registry = RegisterObjectToCSVConverters(); 
+            services.AddMvc(options => {
+                 options.OutputFormatters.Insert(0, new CSVOutputFormatter(registry)); 
+                 //This seems the only way to get the csv formater to run with the defaul json formatter running as that captures all content types.
+                 //options.OutputFormatters.Add(new CSVOutputFormatter()); 
+            });
 
             // Add application services.
-            // services.AddTransient<IEmailSender, AuthMessageSender>();
-            // services.AddTransient<ISmsSender, AuthMessageSender>();
+            services.AddTransient<ISearchEngine, BingSearchService>();
+        }
+
+        private IDictionary<Type, IConvertTypeToCSV> RegisterObjectToCSVConverters()
+        {
+            var registry = new Dictionary<Type, IConvertTypeToCSV>(); 
+            registry.Add(new SearchOutcome().GetType(), new SearchOutcomeCVSFormatter()); 
+            return registry;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

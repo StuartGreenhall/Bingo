@@ -8,11 +8,10 @@
         @await Html.PartialAsync("_SearchBox")
     </div>
     <div class="col-sm-3 col-sm-offset-1 controller">
-        <div class="btn-group" role="group" aria-label="...">
-            <button type="button" class="btn btn-default">Analyse</button>
+        <button type="button" class="btn btn-default">Analyse</button>
+        <a href="http://localhost:5000/Search/Raw?SearchTerm=@(Model.SearchTerm)">
             <button type="button" class="btn btn-default">Download</button>
-            <button type="button" class="btn btn-default">GetLucky</button>
-        </div> 
+        </a>
     </div>
 </div>
 

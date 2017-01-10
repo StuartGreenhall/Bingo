@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Bingo.Web.Models;
 using Bingo.Web.OutputFormatters;
-using Microsoft.AspNetCore.Mvc.Formatters;
 using NUnit.Framework;
 
 namespace Unit.Tests

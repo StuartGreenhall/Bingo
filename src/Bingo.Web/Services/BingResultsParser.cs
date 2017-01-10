@@ -47,6 +47,8 @@ namespace Bingo.Services
                     return BuildFromAd(node);
                 case "b_algo":
                     return BuildFromNatural(node);
+                case "b_ans": 
+                    return BuildFromComplimentary(node);
                 case "b_no":
                     return new SearchResult() { Type = ResultType.NoResult };
                 default:
@@ -66,6 +68,13 @@ namespace Bingo.Services
         {
             SearchResult result = ParseCommonFields(node);
             result.Type = ResultType.Ad;
+            return result;
+        }
+
+        private SearchResult BuildFromComplimentary(HtmlNode node)
+        {
+            SearchResult result = new SearchResult();
+            result.Type = ResultType.Complementary;
             return result;
         }
 

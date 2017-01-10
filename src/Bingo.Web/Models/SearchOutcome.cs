@@ -7,9 +7,20 @@ namespace Bingo.Web.Models
     {
         public int AdCount  { get; }  
         public int PageResultCount  { get; }
-        public int TotalResultsCount  { get; }
+        public int ComplimentaryCount  { get; }
+        public long TotalResultsCount  { get; }
         public String SearchTerm  { get; private set; }
         public List<SearchResult> SearchResults  { get; }
+
+        public int[] ResultTypeDistribution {
+            get {
+                return new int[] {
+                    PageResultCount, 
+                    AdCount, 
+                    ComplimentaryCount
+                };
+            }
+        }
 
         public SearchOutcome(String resultsText, List<SearchResult> searchResults)
         {
@@ -17,6 +28,7 @@ namespace Bingo.Web.Models
             this.SearchResults = searchResults;
             this.AdCount = GetAdCount(searchResults);
             this.PageResultCount = GetPageResultCount();
+            this.ComplimentaryCount = GetComplimentaryCount();
         }
 
         public SearchOutcome()
@@ -34,6 +46,11 @@ namespace Bingo.Web.Models
             return GetNaturalSearchResults().Count;
         }
 
+        private int GetComplimentaryCount()
+        {
+            return this.SearchResults.FindAll(search => { return search.IsComplementary(); }).Count;
+        }
+
         public List<SearchResult> GetNaturalSearchResults() {
             return this.SearchResults.FindAll(search => { return search.IsNatural(); });
         }
@@ -42,10 +59,10 @@ namespace Bingo.Web.Models
             return this.SearchResults.FindAll(search => { return search.IsAd(); });
         }
 
-        private int GetTotalResults(string resultsText) {
+        private long GetTotalResults(string resultsText) {
             var number = resultsText.Split(' ')[0]; 
             number = number.Replace(@",", string.Empty);
-            return int.Parse(number);
+            return long.Parse(number);
         }
 
         private int GetAdCount(List<SearchResult> searchResults)

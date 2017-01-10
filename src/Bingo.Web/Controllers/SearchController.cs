@@ -15,8 +15,9 @@ namespace Bingo.Controllers
 
         public async Task<IActionResult> Index(SearchViewModel vm)
         {
-            var outcome = await SearchEngine.Search(vm.SearchTerm); 
-            return View(outcome);
+            var outcome = await SearchEngine.Search(vm.SearchTerm);
+            var outcomeVm = new SearchOutcomeViewModel(outcome); 
+            return View(outcomeVm);
         }
 
         [Produces("text/csv")]

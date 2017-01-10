@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Bingo.Web.Models;
 using NUnit.Framework;
@@ -48,17 +49,36 @@ namespace Unit.Tests
         }
 
         [Test]
-        public void ItCalulatesResultCountOnPageFromSearchResults() 
+        public void ItCalulatesComplimentaryResultCountOnPageFromSearchResults() 
         {   
             var results = new List<SearchResult> {
                 new SearchResult { Type = ResultType.Natural },
                 new SearchResult { Type = ResultType.Natural },
-                new SearchResult { Type = ResultType.Unknown }
+                new SearchResult { Type = ResultType.Complementary },
+                new SearchResult { Type = ResultType.Ad },
             };
 
             var outcome = new SearchOutcome("110", results);
-            Assert.That(outcome.AdCount, Is.EqualTo(0)); 
-            Assert.That(outcome.PageResultCount, Is.EqualTo(2)); 
+            Assert.That(outcome.AdCount, Is.EqualTo(1)); 
+            Assert.That(outcome.ComplimentaryCount, Is.EqualTo(1)); 
+            Assert.That(outcome.PageResultCount, Is.EqualTo(2));
+        }
+
+                [Test]
+        public void ItCalulatesResultDistributionFromSearchResults() 
+        {   
+            var results = new List<SearchResult> {
+                new SearchResult { Type = ResultType.Natural },
+                new SearchResult { Type = ResultType.Natural },
+                new SearchResult { Type = ResultType.Complementary },
+                new SearchResult { Type = ResultType.Ad },
+            };
+
+            var outcome = new SearchOutcome("110", results);
+            Assert.That(outcome.AdCount, Is.EqualTo(1)); 
+            Assert.That(outcome.ComplimentaryCount, Is.EqualTo(1)); 
+            Assert.That(outcome.PageResultCount, Is.EqualTo(2));
+            Assert.That(outcome.ResultTypeDistribution, Is.EquivalentTo(new int[] {2, 1, 1})); 
         }
 
         

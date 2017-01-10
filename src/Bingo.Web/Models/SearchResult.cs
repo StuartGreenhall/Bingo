@@ -27,6 +27,10 @@ namespace Bingo.Web.Models
         public bool IsNatural() {
             return Type == ResultType.Natural;
         }
+
+        public bool IsComplementary() {
+            return Type == ResultType.Complementary;
+        }
         
         public bool IsNoResult()
         {

@@ -1,4 +1,4 @@
-@model SearchOutcome
+@model SearchOutcomeViewModel
 
 @{
     ViewData["Title"] = "Results";
@@ -8,22 +8,21 @@
         @await Html.PartialAsync("_SearchBox")
     </div>
     <div class="col-sm-3 col-sm-offset-1 controller">
-        <button type="button" class="btn btn-default">Analyse</button>
-        <a href="http://localhost:5000/Search/Raw?SearchTerm=@(Model.SearchTerm)">
+        <button type="button" class="btn btn-default" id="analyse">Analyse</button>
+        <a href="http://localhost:5000/Search/Raw?SearchTerm=@(Model.Outcome.SearchTerm)">
             <button type="button" class="btn btn-default">Download</button>
         </a>
     </div>
 </div>
 
-<div class="row">
+<div class="row" id="search-results">
     <div class="col-sm-8 main-results">
         <div class="page-header">
-            <h1>Search Results: <small class="label label-success">@(Model.SearchTerm)</small></h1>
-            <h3>Found <span class="label label-info">@(Model.TotalResultsCount)</span>
+            <h1>Search Results: <small class="label label-success">@(Model.Outcome.SearchTerm)</small></h1>
+            <h3>Found <span class="label label-info">@(Model.Outcome.TotalResultsCount)</span>
         </h3>
         </div>
-        
-        @foreach (var result in Model.GetNaturalSearchResults())
+        @foreach (var result in Model.Outcome.GetNaturalSearchResults())
         {
             <div class="media"> 
                 <div class="media-left"> 
@@ -37,14 +36,13 @@
                     <p>@result.Link</p>
                 </div> 
             </div>
-
         }
     </div>
     <div class="col-sm-3 col-sm-offset-1 complamentory">
         <div class="page-header">
             <h1><small>Complimentary Info</small></h1>
         </div>
-        @foreach (var result in Model.GetAdSearchResults())
+        @foreach (var result in Model.Outcome.GetAdSearchResults())
         {   
             <div class="row">
                 <div class="col-xs-6 col-md-3">
@@ -56,4 +54,11 @@
             </div>
         }
     </div>
+</div>
+
+<div class="row" id="analytics" style="display: none" data-attr="@(Model.Json)">
+    <div class="page-header">
+        <h1>Search Results Analytics</h1>   
+    </div>
+    <canvas id="distribution" width="200" height="200"></canvas>
 </div>

@@ -40,8 +40,6 @@ namespace Bingo.Web.OutputFormatters
 
                 using (var writer = context.WriterFactory(response.Body, Encoding.UTF8))
                 {   
-                    // Jil.JSON.Serialize(context.Object, writer);
-                    // write stuff here.
                     writer.WriteLine(output);
                     await writer.FlushAsync();
                 }
